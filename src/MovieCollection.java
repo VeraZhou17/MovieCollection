@@ -165,6 +165,66 @@ public class MovieCollection
   private void searchCast()
   {
     /* TASK 4: IMPLEMENT ME! */
+    System.out.print("Enter a person to search for (first or last name): ");
+    String searchTerm = scanner.nextLine();
+
+    // prevent case-sensitivity
+    searchTerm = searchTerm.toLowerCase();
+
+    // ArrayList to hold search results
+    ArrayList<Movie> results = new ArrayList<Movie>();
+
+    // search through ALL the movies in the collection
+    for (int i = 0; i < movies.size(); i++)
+    {
+      String cast = movies.get(i).getCast();
+
+      if (cast.indexOf(searchTerm) != -1)
+      {
+        results.add(movies.get(i));
+      }
+    }
+
+    // sort the results by title
+    sortResults(results);
+
+    // display cast to user
+    for (int i = 0; i < results.size(); i++)
+    {
+      String castNames = results.get(i).getCast();
+      String target = searchTerm;
+      int indexOfTarget = results.indexOf(target);
+
+      // this will print index 0 as choice 1 in the results list; better for user!
+      int choiceNum = i + 1;
+
+      System.out.println("" + choiceNum + ". " + castNames);
+    }
+
+    System.out.println("Which would you like to see all movies for?");
+    System.out.print("Enter number: ");
+
+    int choice = scanner.nextInt();
+    scanner.nextLine();
+
+    for (int i = 0; i < results.size(); i++)
+    {
+      int choiceNum = i + 1;
+      System.out.println("" + choiceNum + ". " + results.get(i));
+    }
+
+    System.out.println("Which movie would you like to learn more about?");
+    System.out.print("Enter number: ");
+
+    int choice3 = scanner.nextInt();
+    scanner.nextLine();
+
+    Movie selectedMov = results.get(choice3 - 1);
+
+    displayMovieInfo(selectedMov);
+
+    System.out.println("\n ** Press Enter to Return to Main Menu **");
+    scanner.nextLine();
   }
 
   private void searchKeywords()
@@ -197,12 +257,12 @@ public class MovieCollection
     // now, display them all to the user
     for (int i = 0; i < results.size(); i++)
     {
-      String keyWords = results.get(i).getKeywords();
+      String movieName = results.get(i).getTitle();
 
       // this will print index 0 as choice 1 in the results list; better for user!
       int choiceNum = i + 1;
 
-      System.out.println("" + choiceNum + ". " + keyWords);
+      System.out.println("" + choiceNum + ". " + movieName);
     }
 
     System.out.println("Which movie would you like to learn more about?");
