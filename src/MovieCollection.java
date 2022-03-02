@@ -192,8 +192,13 @@ public class MovieCollection
     for (int i = 0; i < results.size(); i++)
     {
       String castNames = results.get(i).getCast();
-      String target = searchTerm;
-      int indexOfTarget = results.indexOf(target);
+      FileReader fileReader = new FileReader(results);
+      BufferedReader bufferedReader = new BufferedReader(fileReader);
+      String line = bufferedReader.readLine();
+
+      String[] castNameFromMov = line.split("\\|");
+//      String target = searchTerm;
+//      int indexOfTarget = results.indexOf(target);
 
       // this will print index 0 as choice 1 in the results list; better for user!
       int choiceNum = i + 1;
@@ -251,6 +256,7 @@ public class MovieCollection
       }
     }
 
+
     // sort the results by title
     sortResults(results);
 
@@ -303,7 +309,8 @@ public class MovieCollection
 
       movies = new ArrayList<Movie>();
 
-      while ((line = bufferedReader.readLine()) != null) {
+      while ((line = bufferedReader.readLine()) != null)
+      {
         String[] movieFromCSV = line.split(",");
 
         String title = movieFromCSV[0];
